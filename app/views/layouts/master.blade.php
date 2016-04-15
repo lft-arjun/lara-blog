@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset= "UTF-8" >
-		<title>My Website</title>
+		<title>Blogs</title>
 		
 		<!-- CSS -->
 		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" > -->

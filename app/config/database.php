@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'forge',
+			'database'  => 'blog',
 			'username'  => 'root',
 			'password'  => 'password',
 			'charset'   => 'utf8',

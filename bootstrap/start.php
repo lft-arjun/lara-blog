@@ -24,12 +24,15 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
+// $env = $app->detectEnvironment(array(
 
-	'local' => array('homestead'),
+// 	'local' => array('homestead', 'http://localhost:8000'),
 
-));
+// ));
+$env = $app->detectEnvironment(function() {
 
+    return gethostname() == 'linux-HP-Pavilion-g6-Notebook-PC' ? 'local' : 'production';
+});
 /*
 |--------------------------------------------------------------------------
 | Bind Paths
