@@ -15,3 +15,28 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::any("login", [
+ "as"   => "user.login",
+ "uses" => "UserController@login"
+]);
+
+Route::resource('users', 'UserController');
+
+Route::get('logout', function() {
+	Auth::logout();
+
+    return Redirect::to('/')
+        ->with('message', 'You are successfully logged out.');
+
+});
+
+Route::group(array('before' => 'auth'), function()
+{
+    // Route::get('/', function()
+    // {
+    //     // Has Auth Filter
+    // });
+
+    Route::get('posts', 'PostController@index');
+});

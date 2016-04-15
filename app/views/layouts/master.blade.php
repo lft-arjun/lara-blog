@@ -17,9 +17,26 @@
  -->
 	</head>
     <body>
-
+    <header>
+		<nav class="navbar navbar-defualt" role="navigation">
+			<div class="navbar-header">
+				<ul class="nav navbar-nav">
+					 @if(!Auth::check())
+		                    <li>{{ HTML::link('users/create', 'Register') }}</li>   
+		                    <li>{{ HTML::link('login', 'Login') }}</li>   
+		              @else
+		                    <li>{{ HTML::link('users/logout', 'logout') }}</li>
+		              @endif
+				</ul>
+			</div>
+		</nav>
+	</header> 
+   
         <div class="container">
         	<div class="jumbotron">
+        	@if(Session::has('message'))
+            	<p class="alert">{{ Session::get('message') }}</p>
+        	@endif
             @yield('content')
             </div>
         </div>
