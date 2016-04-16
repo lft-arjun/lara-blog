@@ -1,7 +1,14 @@
 <?php
+use Database\Storage\Comment\EloquentCommentRepository as CommentRepo;
 
-class CommentController extends \BaseController {
+class CommentController extends \BaseController
+{
+	protected $comment;
 
+	public function __construct(CommentRepo $comment)
+	{
+		$this->comment = $comment;
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -20,7 +27,7 @@ class CommentController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('comments.create');
 	}
 
 
@@ -31,7 +38,26 @@ class CommentController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		if ($this->isPostRequest()) {
+			//get all the post data from the form
+			$input = Input::all();
+	        $validation = Validator::make($input, Comment::$rules);
+
+	        if ($validation->passes())
+	        {
+	        	$input['user_id'] = Auth::id();
+	        	$input['is_active'] = 1;
+	        	$input['post_id'] = 5;
+	            $this->comment->create($input);
+
+	            return Redirect::route('/')->with('message', ' commented .');
+	        }
+
+	        return Redirect::route('/')
+	            ->withInput()
+	            ->withErrors($validation)
+	            ->with('message', 'There were validation errors.');
+        }
 	}
 
 

@@ -24,11 +24,7 @@ Route::get('logout', ["as" => "logout", 'uses' => "UserController@logout"]);
 
 Route::group(array('before' => 'auth'), function()
 {
-    // Route::get('/', function()
-    // {
-    //     // Has Auth Filter
-    // });
-
+    //Route for posts
     Route::get('posts', 'PostController@index');
     Route::get('posts/create', ["as"   => "posts.create", 'uses' =>'PostController@create']);
     Route::post('posts/create', ["as"   => "posts.store", 'uses' =>'PostController@store']);
@@ -37,4 +33,7 @@ Route::group(array('before' => 'auth'), function()
     Route::get('/post/{id}/edit', ['as' => 'post.edit', 'uses' => 'PostController@edit']);
     Route::patch('/post/{id}/edit', ['as' => 'post.update', 'uses' => 'PostController@update']);
     Route::get('/post/{id}/delete', ['as' => 'post.delete', 'uses' => 'PostController@destroy']);
+    //Route for comments
+    Route::get('comment/create', ["as"   => "comment.create", 'uses' =>'CommentController@create']);
+    Route::post('comment/store', ["as"   => "comment.store", 'uses' =>'CommentController@store']);
 });

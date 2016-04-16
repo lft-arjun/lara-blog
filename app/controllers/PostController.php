@@ -1,10 +1,13 @@
 <?php
+use Database\Storage\Post\EloquentPostRepository as PostRepo;
 
-class PostController extends \BaseController {
+class PostController extends \BaseController
+{
+	protected $post;
 
-	public function __construct()
+	public function __construct(PostRepo $post)
 	{
-
+		$this->post = $post;
 	}
 	/**
 	 * Display a listing of the resource.
@@ -13,10 +16,9 @@ class PostController extends \BaseController {
 	 */
 	public function index()
 	{
+		// dd(Auth::check());
 		// $d = User::find(Auth::id())->is_admin();
-		
-		// dd($d);
-		$posts = Post::all();
+		$posts = $this->post->all();
 		return View::make('posts.index' , compact('posts'));
 	}
 
@@ -82,7 +84,7 @@ class PostController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$post = Post::find($id);
+		$post = $this->post->find($id);
 		if (is_null($post)) {
 			return Redirect::route('users.index')->with('message', 'Invalid Id found');
 		}
@@ -104,8 +106,8 @@ class PostController extends \BaseController {
 	
 			$validation = Validator::make($input, Post::$rules);
 			if ($validation->passes()) {
-				$post = Post::find($id);
-				$post->update($input);
+				$input['is_active'] = isset($input['is_active']) ? 1 : 0;
+				$this->post->update($id, $input);
 				return Redirect::route('/')->with('message',"Record $id has updated successfully.");
 			}
 			return Redirect::route("post.edit", $id)
@@ -124,14 +126,8 @@ class PostController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		Post::find($id)->delete();
+		$this->post->destroy($id);
 		return Redirect::route('/')->with('message', "Record $id has deleted successfully.");
 	}
-
-	// protected function isPostRequest()
- //    {
- //   		return Input::server("REQUEST_METHOD") == "POST";
- //    }
-
 
 }

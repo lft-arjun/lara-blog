@@ -1,7 +1,15 @@
 <?php
+use Database\Storage\User\EloquentUserRepository as UserRepo;
 
-class UserController extends \BaseController {
+class UserController extends \BaseController
+{
 
+	protected $user;
+
+	public function __construct(UserRepo $user)
+	{
+		$this->user = $user;
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -49,8 +57,7 @@ class UserController extends \BaseController {
 	{
 		Auth::logout();
 
-    	return Redirect::to('/')
-        ->with('message', 'You are successfully logged out.');
+    	return Redirect::to('/')->with('message', 'You are successfully logged out.');
 	}
 	/**
 	 * Show the form for creating a new resource.
@@ -80,9 +87,9 @@ class UserController extends \BaseController {
 	        	$input['password'] = Hash::make($input['password']);
 	        	$input['is_active'] = 1;
 	        	$input['role'] = strtolower($input['role']);
-	            User::create($input);
+	            $this->user->create($input);
 
-	            return Redirect::route('users.index')->with('message', 'User successfully created.');
+	            return Redirect::route('/')->with('message', 'User successfully created.');
 	        }
 
 	        return Redirect::route('users.create')
@@ -139,12 +146,5 @@ class UserController extends \BaseController {
 	{
 		//
 	}
-
-
-	// protected function isPostRequest()
- //    {
- //   		return Input::server("REQUEST_METHOD") == "POST";
- //    }
-
 
 }
