@@ -25,7 +25,7 @@
 		                    <li>{{ HTML::link('users/create', 'Register') }}</li>   
 		                    <li>{{ HTML::link('login', 'Login') }}</li>   
 		              @else
-		                    <li>{{ HTML::link('users/logout', 'logout') }}</li>
+		                    <li>{{ HTML::link('logout', 'logout') }}</li>
 		              @endif
 				</ul>
 			</div>

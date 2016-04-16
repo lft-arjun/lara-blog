@@ -42,7 +42,16 @@ class UserController extends \BaseController {
 		}
 		return View::make('users.login');
 	}
+	/**
+	*
+	**/
+	public function logout()
+	{
+		Auth::logout();
 
+    	return Redirect::to('/')
+        ->with('message', 'You are successfully logged out.');
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -131,10 +140,11 @@ class UserController extends \BaseController {
 		//
 	}
 
-	protected function isPostRequest()
-    {
-   		return Input::server("REQUEST_METHOD") == "POST";
-    }
+
+	// protected function isPostRequest()
+ //    {
+ //   		return Input::server("REQUEST_METHOD") == "POST";
+ //    }
 
 
 }

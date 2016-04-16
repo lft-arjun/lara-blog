@@ -15,4 +15,10 @@ class BaseController extends Controller {
 		}
 	}
 
+	protected function isPostRequest()
+    {
+   		return Input::server("REQUEST_METHOD") == "POST";
+    }
+
+
 }

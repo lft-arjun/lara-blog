@@ -32,6 +32,33 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	    'password' => 'required|min:5',
   	);
 
+ 	public function posts()
+    {
+    	return $this->hasMany('Post','author_id');
+    }
+	public function comments()
+	{
+    	return $this->hasMany('Comment','user_id');
+   	}
+
+   	public function can_post()
+	{
+		$role = $this->role;
+		if($role == 'author' || $role == 'admin')
+		{
+		  return true;
+		}
+		return false;
+	}
+	public function is_admin()
+	{
+		$role = $this->role;
+		if($role == 'admin')
+		{
+		  return true;
+		}
+		return false;
+	}
   	public function getAuthIdentifier()
 	{
 		return $this->getKey();
@@ -61,9 +88,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->email;
 	}
-	public function phoneNumber()
-    {
-        return $this->hasOne('Phone', 'user_id');
-    }
+
 
 }

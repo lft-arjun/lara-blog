@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', [ "as" => "/" , "uses"=>"PostController@index"]);
 
 Route::any("login", [
  "as"   => "user.login",
@@ -23,13 +20,7 @@ Route::any("login", [
 
 Route::resource('users', 'UserController');
 
-Route::get('logout', function() {
-	Auth::logout();
-
-    return Redirect::to('/')
-        ->with('message', 'You are successfully logged out.');
-
-});
+Route::get('logout', ["as" => "logout", 'uses' => "UserController@logout"]);
 
 Route::group(array('before' => 'auth'), function()
 {
@@ -39,4 +30,11 @@ Route::group(array('before' => 'auth'), function()
     // });
 
     Route::get('posts', 'PostController@index');
+    Route::get('posts/create', ["as"   => "posts.create", 'uses' =>'PostController@create']);
+    Route::post('posts/create', ["as"   => "posts.store", 'uses' =>'PostController@store']);
+
+    Route::get('/post/{id}/show', ['as' => 'post.show', 'uses' => 'PostController@show']);
+    Route::get('/post/{id}/edit', ['as' => 'post.edit', 'uses' => 'PostController@edit']);
+    Route::patch('/post/{id}/edit', ['as' => 'post.update', 'uses' => 'PostController@update']);
+    Route::get('/post/{id}/delete', ['as' => 'post.delete', 'uses' => 'PostController@destroy']);
 });
