@@ -1,7 +1,20 @@
 @extends('layouts.master')
 
 @section("content")
-
+	<div class="col-md-4 pull-right">
+		<div class="input-group">
+			<form class="navbar-form" role="search">
+				<div class="input-group">
+				    <input type="text" name="search" class="form-control" placeholder="Search by title..." value="{{{isset($search) ? $search : '' }}}">
+				    <span class="input-group-btn">
+				        <button type="submit" class="btn btn-default" type="button">
+				            <span class="glyphicon glyphicon-search"></span>
+				    </button>
+				    </span>
+			    </div>
+		    </form>
+		</div>
+    </div>
 	<div class="row">
 	    <div class="col-sm-12">
 		@foreach($posts as $key => $post)

@@ -3,6 +3,9 @@ use Database\Storage\Post\EloquentPostRepository as PostRepo;
 
 class PostController extends \BaseController
 {
+	/**
+	*@var post
+	**/
 	protected $post;
 
 	public function __construct(PostRepo $post)
@@ -16,10 +19,11 @@ class PostController extends \BaseController
 	 */
 	public function index()
 	{
-		// dd(Auth::check());
-		// $d = User::find(Auth::id())->is_admin();
-		$posts = $this->post->all();
-		return View::make('posts.index' , compact('posts'));
+		//Search params
+		$search = (!empty(Input::only('search'))) ? Input::only('search')['search'] : null;
+
+		$posts = $this->post->all($search);
+		return View::make('posts.index')->with(array('posts' =>$posts, 'search' => $search));
 	}
 
 
@@ -61,13 +65,13 @@ class PostController extends \BaseController
 	        	$input['author_id'] = Auth::id();
 	            $this->post->create($input);
 
-	            return Redirect::route('/')->with('message', 'User successfully created.');
+	            return Redirect::route('/')->with('message', Lang::get('messages.post_save'));
 	        }
 	       
 	        return Redirect::route('posts.create')
 	            ->withInput()
 	            ->withErrors($validation)
-	            ->with('message', 'There were validation errors.');
+	            ->with('message', Lang::get('messages.validation_error'));
         }
 	}
 
@@ -81,7 +85,7 @@ class PostController extends \BaseController
 	public function show($id)
 	{
 		if(!is_numeric($id)) {
-			return Redirect::route('/')->with('message', "$id is not a number");
+			return Redirect::route('/')->with('message', Lang::get('messages.record_not_found'));
 		}
 
 		$post = $this->post->find($id);
@@ -131,12 +135,12 @@ class PostController extends \BaseController
 				}
 				$input['is_active'] = isset($input['is_active']) ? 1 : 0;
 				$this->post->update($id, $input);
-				return Redirect::route('/')->with('message',"Record $id has updated successfully.");
+				return Redirect::route('/')->with('message',Lang::get('messages.post_update'));
 			}
 			return Redirect::route("post.edit", $id)
 	            ->withInput()
 	            ->withErrors($validation)
-	            ->with('message', 'There were validation errors.');
+	            ->with('message', Lang::get('messages.validation_error'));
 		}
 	}
 
@@ -150,9 +154,13 @@ class PostController extends \BaseController
 	public function destroy($id)
 	{
 		$this->post->destroy($id);
-		return Redirect::route('posts.list')->with('message', "Record $id has deleted successfully.");
+		return Redirect::route('posts.list')->with('message', Lang::get('messages.post_delete'));
 	}
-
+	/**
+	 * List all the posts.
+	 *
+	 * @return Response
+	 */
 	public function list()
 	{
 		$posts = $this->post->all();

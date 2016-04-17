@@ -50,13 +50,13 @@ class CommentController extends \BaseController
 	        	$input['post_id'] = $input['post_id'];
 	            $this->comment->create($input);
 
-	            return Redirect::route('post.show', $input['post_id'])->with('message', 'Your comment has posted successfully.');;
+	            return Redirect::route('post.show', $input['post_id'])->with('message', Lang::get('messages.comment_save'));
 	        }
 
 	        return Redirect::route('post.show', Input::only('post_id'))
 	            ->withInput()
 	            ->withErrors($validation)
-	            ->with('message', 'There were validation errors.');
+	            ->with('message', Lang::get('messages.validation_error'));
         }
 	}
 

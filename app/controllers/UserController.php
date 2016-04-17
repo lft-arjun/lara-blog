@@ -30,14 +30,14 @@ class UserController extends \BaseController
  			$validation = Validator::make($input, $rules, $messages);
 			if ($validation->passes()) {
 				if (Auth::attempt(Input::only('email', 'password'))) {
-				    return Redirect::route('/');
+				    return Redirect::route('/')->with('message', Lang::get('messages.login'));
 				} else {
-					 return Redirect::to('login')->with('message', 'Username or Password invalid');
+					 return Redirect::to('login')->with('message', Lang::get('messages.user_invalid'));
 				}
 			}
 			return Redirect::to('login')->withInput()
 	            ->withErrors($validation)
-	            ->with('message', 'Email or password can not be empty.');
+	            ->with('message', Lang::get('messages.empty_input'));
 		}
 		return View::make('users.login');
 	}
@@ -48,7 +48,7 @@ class UserController extends \BaseController
 	{
 		Auth::logout();
 
-    	return Redirect::to('/')->with('message', 'You are successfully logged out.');
+    	return Redirect::to('/')->with('message', Lang::get('messages.logout'));
 	}
 	/**
 	 * Show the form for creating a new resource.
@@ -80,13 +80,13 @@ class UserController extends \BaseController
 	        	$input['role'] = strtolower($input['role']);
 	            $this->user->create($input);
 
-	            return Redirect::route('/')->with('message', 'User successfully created.');
+	            return Redirect::route('/')->with('message', Lang::get('messages.register'));
 	        }
 
 	        return Redirect::route('users.create')
 	            ->withInput()
 	            ->withErrors($validation)
-	            ->with('message', 'There were validation errors.');
+	            ->with('message', Lang::get('messages.valiation_error'));
         }
 	}
 
