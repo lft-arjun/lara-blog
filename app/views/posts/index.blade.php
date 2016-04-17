@@ -2,31 +2,30 @@
 
 @section("content")
 
-	@foreach($posts as $key => $post)
-	     <div class="row">
+	<div class="row">
 	    <div class="col-sm-12">
-	        <div class="thumbnail">
-	        	<?php $comments = $post->comments ;?>
-	         
-	            <div class="caption">
-	                <p><h1>{{ $post->title }}</h1></p>
-	                <p>Author: {{ $post->author->first_name }}<br/>Published:{{date('Y-m-d', strtotime($post->created_at))}}</p>
-	                <p>{{ $post->body }}</p>
-	                <p>{{HTML::linkRoute('post.edit','Edit',$post->id)}}</p>
-	                <p>{{HTML::linkRoute('post.delete','Delete',$post->id)}}</p>
-	                <p>{{HTML::linkRoute('post.show','View',$post->id,['target'=>'_blank'])}}</p>
-	            </div>
-	            <p>{{{ (count($comments->toArray()) !== 0) ? count($comments->toArray()).' Comments' : '0 Comment' }}} </p>
-	            <hr/>
-	            @include('comments.create')
-	            @foreach ($comments as $row)
-	            	<p>{{$row->author->first_name}}</p>
-	            	<p>{{$row->body}}</p>
-	            	<br/>
-	            @endforeach
-	        </div>
+		@foreach($posts as $key => $post)
+	        <?php $comments = $post->comments ;?>
+	        <h2><a href="{{ URL::route('post.show', $post->id) }}">{{ $post->title }}</a></h2>
+	        <p class="lead">by <a href="#">{{ $post->author->first_name }}</a></p>
+	        <p><span class="glyphicon glyphicon-time"></span> Posted on {{date('F j, Y, g:i a', strtotime($post->created_at))}} &nbsp;<span class="glyphicon glyphicon-comment"></span>&nbsp; {{{ (count($comments->toArray()) !== 0) ? count($comments->toArray()).' Comments' : '0 Comment' }}}  </p>
+	        <hr/>
+	        <!-- show only incase of image uploaded -->
+	        @if($post->image)
+            	<img class="img-responsive img-thumbnail" src="{{'/uploads/'.$post->image}}"  alt="">
+            	<hr/>
+            @endif
+            <p>{{ Str::limit($post->body, 225) }}</p>
+            @if(strlen ($post->body) > 225)
+            <a class="btn btn-primary" href="{{ URL::route('post.show', $post->id) }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            @endif
+            <hr>
+	            
+		@endforeach
 	    </div>
 	</div>
-	@endforeach
+	<div style="float:right" >
+    	{{$posts->appends(array('sort' => 'id'))->links()}}
+	</div>
 
 @stop

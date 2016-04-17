@@ -4,10 +4,10 @@ use Database\Storage\Interfaces\RepositoryInterface;
 use Post;
  
 class EloquentPostRepository implements RepositoryInterface {
- 
+  const PAGELIMIT = 5;
   public function all()
   {
-    return Post::where('is_active', '=', 1)->orderBy('created_at', 'desc')->get();
+    return Post::where('is_active', '=', 1)->orderBy('created_at', 'desc')->paginate(static::PAGELIMIT);
   }
  
   public function find($id)

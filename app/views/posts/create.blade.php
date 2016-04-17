@@ -6,7 +6,7 @@
     <span class="right">{{ HTML::link('admin/dash-board','Cancel',['class' => 'button tiny radius']) }}</span>
 </h2>
 <hr>
-{{ Form::open(['route'=>['posts.store']]) }}
+{{ Form::open(['route'=>['posts.store'], 'files' => true]) }}
 <div class="row">
     <?php $titleE = $errors->first('title'); ?>
     <div class={{{ empty($titleE) ? 'form-group' : 'has-error'  }}}>
@@ -21,6 +21,14 @@
         {{ Form::label('body','Content:') }}
         {{ Form::textarea('body',Input::old('body'),['rows'=>5 , 'class' => 'form-control']) }}
         <div>{{{($errors->has()) ? $errors->first('body') : '' }}}</div>
+    </div>
+</div>
+<div class="row">
+    <?php $bodyE = $errors->first('image'); ?>
+    <div class={{{ empty($bodyE) ? 'form-group' : 'has-error'  }}}>
+        {{ Form::label('image','Upload:') }}
+        {{ Form::file('image') }}
+        <div>{{{($errors->has()) ? $errors->first('image') : '' }}}</div>
     </div>
 </div>
 <div class="row">

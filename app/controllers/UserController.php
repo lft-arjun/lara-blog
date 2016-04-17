@@ -39,7 +39,7 @@ class UserController extends \BaseController
  			$validation = Validator::make($input, $rules, $messages);
 			if ($validation->passes()) {
 				if (Auth::attempt(Input::only('email', 'password'))) {
-				    return Redirect::route('users.index')->with('message', 'Thanks for registering!') ;
+				    return Redirect::route('/');
 				} else {
 					 return Redirect::to('login')->with('message', 'Username or Password invalid');
 				}

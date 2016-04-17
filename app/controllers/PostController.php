@@ -36,6 +36,7 @@ class PostController extends \BaseController
 
 	/**
 	 * Store a newly created resource in storage.
+	 * @todo resize uploaded file and need to add extension validation
 	 *
 	 * @return Response
 	 */
@@ -44,14 +45,21 @@ class PostController extends \BaseController
 		if ($this->isPostRequest()) {
 			//get all the post data from the form
 			$input = Input::all();
+
 	        $validation = Validator::make($input, Post::rules('create'));
 
 	        if ($validation->passes())
 	        {
+	        	if (Input::hasFile('image'))
+				{
+				    $file = Input::file('image');
+				    $fileName = $fileName = $file->getFilename() . '' .$file->getClientOriginalExtension();
+				    $file->move(public_path().'uploads/', $fileName);
+				    $input['image'] = $fileName;
+				}
 	        	$input['is_active'] = 1;
-	        	$input['slug'] = 3;
 	        	$input['author_id'] = Auth::id();
-	            Post::create($input);
+	            $this->post->create($input);
 
 	            return Redirect::route('/')->with('message', 'User successfully created.');
 	        }
@@ -72,7 +80,13 @@ class PostController extends \BaseController
 	 */
 	public function show($id)
 	{
-		//
+		if(!is_numeric($id)) {
+			return Redirect::route('/')->with('message', "$id is not a number");
+		}
+
+		$post = $this->post->find($id);
+		return View::make('posts.show' , compact('post'));
+
 	}
 
 
@@ -105,7 +119,16 @@ class PostController extends \BaseController
 			$input = Input::all();
 	
 			$validation = Validator::make($input, Post::$rules);
+			//Check input are valid or not
 			if ($validation->passes()) {
+				//Check file is uploaded of not
+				if (Input::hasFile('image'))
+				{
+				    $file = Input::file('image');
+				    $fileName = $file->getFilename() . '.' .$file->getClientOriginalExtension();
+				    $file->move(public_path().'/uploads/', $fileName);
+				    $input['image'] = $fileName;
+				}
 				$input['is_active'] = isset($input['is_active']) ? 1 : 0;
 				$this->post->update($id, $input);
 				return Redirect::route('/')->with('message',"Record $id has updated successfully.");
@@ -127,7 +150,13 @@ class PostController extends \BaseController
 	public function destroy($id)
 	{
 		$this->post->destroy($id);
-		return Redirect::route('/')->with('message', "Record $id has deleted successfully.");
+		return Redirect::route('posts.list')->with('message', "Record $id has deleted successfully.");
+	}
+
+	public function list()
+	{
+		$posts = $this->post->all();
+		return View::make('posts.list' , compact('posts'));
 	}
 
 }

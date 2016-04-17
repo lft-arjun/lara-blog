@@ -53,6 +53,15 @@ Route::filter('auth.basic', function()
 {
 	return Auth::basic();
 });
+Route::filter('auth.admin', function()
+{
+	if (Auth::check()) {
+		if (Auth::User()->role != 'admin') return Redirect::to('/')->with('message', 'Unauthorized');
+	} else {
+		return Redirect::to('/');
+	} 
+	
+});
 
 /*
 |--------------------------------------------------------------------------

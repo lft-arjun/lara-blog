@@ -16,7 +16,8 @@ class CommentController extends \BaseController
 	 */
 	public function index()
 	{
-		//
+		$comments = $this->comment->all();
+		return View::make('comments.list' , compact('comments'));
 	}
 
 
@@ -46,14 +47,13 @@ class CommentController extends \BaseController
 	        if ($validation->passes())
 	        {
 	        	$input['user_id'] = Auth::id();
-	        	$input['is_active'] = 1;
-	        	$input['post_id'] = 5;
+	        	$input['post_id'] = $input['post_id'];
 	            $this->comment->create($input);
 
 	            return Redirect::route('/')->with('message', ' commented .');
 	        }
 
-	        return Redirect::route('/')
+	        return Redirect::route('post.show', Input::only('post_id'))
 	            ->withInput()
 	            ->withErrors($validation)
 	            ->with('message', 'There were validation errors.');
@@ -69,7 +69,8 @@ class CommentController extends \BaseController
 	 */
 	public function show($id)
 	{
-		//
+		$comment = $this->comment->find($id);
+		return Response::json(array('comment' => $comment->body));
 	}
 
 
@@ -105,7 +106,8 @@ class CommentController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-		//
+		$this->comment->destroy($id);
+		return Response::json(array('status' => true));
 	}
 
 

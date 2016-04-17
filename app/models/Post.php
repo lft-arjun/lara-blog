@@ -5,15 +5,17 @@ class Post extends Eloquent {
   // protected $guarded = [];
   protected $table = 'posts';
 
-   protected $fillable = ['title', 'body', 'slug', 'is_active', 'author_id'];
+   protected $fillable = ['title', 'body', 'image', 'is_active', 'author_id'];
    public static $rules = array(
      'create' => [
       'title' => 'unique:posts,title|required',
       'body' => 'required|min:5',
+      'image' => 'image|max:5'
       ],
       'update' => [
         'title' => 'unique:posts,title|required,:id',
         'body' => 'required|min:5',
+        'image' => 'image|max:5kb'
       ]
     );
   public static function rules( $action, $merge=[], $id=false)

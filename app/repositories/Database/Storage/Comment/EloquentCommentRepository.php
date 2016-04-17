@@ -4,10 +4,10 @@ use Database\Storage\Interfaces\RepositoryInterface;
 use Comment;
  
 class EloquentCommentRepository implements RepositoryInterface {
- 
+ const PAGELIMIT = 5;
   public function all()
   {
-    return Comment::all();
+    return Comment::where('is_active', '=', 1)->orderBy('created_at', 'desc')->paginate(static::PAGELIMIT);
   }
  
   public function find($id)
