@@ -25,7 +25,7 @@
 	            	<!-- Allow edit only comment author -->
 	            	@if(Auth::check())
 		            	@if(Auth::User()->id === $row->author->id)
-		            		@if(\Carbon\Carbon::createFromTimeStamp(strtotime($row->created_at))->diffInSeconds() === 30)
+		            		@if(\Carbon\Carbon::createFromTimeStamp(strtotime($row->created_at))->diffInSeconds() < 60)
 				            	<span class="pull-right">{{HTML::linkRoute('comment.destroy','',$row->id,array('class' => 'delete glyphicon glyphicon-remove', 'id'=>'comment-'. $row->id) )}}</span>
 		            		@endif
 		            	@endif

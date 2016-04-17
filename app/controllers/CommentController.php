@@ -50,7 +50,7 @@ class CommentController extends \BaseController
 	        	$input['post_id'] = $input['post_id'];
 	            $this->comment->create($input);
 
-	            return Redirect::route('/')->with('message', ' commented .');
+	            return Redirect::route('post.show', $input['post_id'])->with('message', 'Your comment has posted successfully.');;
 	        }
 
 	        return Redirect::route('post.show', Input::only('post_id'))
