@@ -10,7 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
+//Guest can access
 Route::get('/', [ "as" => "/" , "uses"=>"PostController@index"]);
 
 Route::any("login", [
@@ -19,10 +19,9 @@ Route::any("login", [
 ]);
 
 Route::resource('users', 'UserController');
-
 Route::get('logout', ["as" => "logout", 'uses' => "UserController@logout"]);
-// dd(Auth::check());
 Route::get('/post/{id}/show', ['as' => 'post.show', 'uses' => 'PostController@show']);
+//only authenticate use can access
 Route::group(array('before' => 'auth'), function()
 {
     //Route for posts

@@ -23,18 +23,9 @@ class UserController extends \BaseController
 	public function login()
 	{
 		$input = Input::all();
-		$messages = array(
-    	'email.required' => 'We need to know your email address',
-    	'password.required' => 'You have to set a password',
- 		);
-		$rules = array(
-		    'email' => 'required|email',
-		    'password' => 'required',
-	    );
-
-		// if ($validation->fails())
-		$input = Input::all();
-
+		$rulesAndMessage = Common::loginValidation();
+		$rules = $rulesAndMessage['rules'];
+		$messages = $rulesAndMessage['messages'];
 		if ($this->isPostRequest()) {
  			$validation = Validator::make($input, $rules, $messages);
 			if ($validation->passes()) {

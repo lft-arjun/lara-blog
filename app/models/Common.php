@@ -15,15 +15,20 @@ class Common
 		// code...
 	}
 
-	public static function uploadFile()
+	public static function loginValidation()
 	{
-		//Check file is uploaded of not
-		if (Input::hasFile('image'))
-		{
-		    $file = Input::file('image');
-		    $fileName = $file->getFilename() . '.' .$file->getClientOriginalExtension();
-		    $file->move(public_path().'/uploads/', $fileName);
-		    $input['image'] = $fileName;
-		}
+		$messages = array(
+    	'email.required' => 'We need to know your email address',
+    	'password.required' => 'You have to set a password',
+ 		);
+		$rules = array(
+		    'email' => 'required|email',
+		    'password' => 'required',
+	    );
+
+	    $validation['messages'] = $messages;
+	    $validation['rules'] = $rules;
+
+	    return $validation;
 	}
 }

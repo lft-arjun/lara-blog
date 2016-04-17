@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section("content")
+{{HTML::linkRoute('posts.create','Add New Post', null, array('class' => 'btn btn-primary btn-sm pull-right'))}}
 <table class="table table-striped">
     <thead>
     <tr>

@@ -4,10 +4,11 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use app\Models\Traits\Relationship\UserRelationship;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait;
+	use UserTrait, RemindableTrait, UserRelationship;
 
 	/**
 	 * The database table used by the model.
@@ -31,33 +32,5 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	    'email' => 'unique:users,email|required',
 	    'password' => 'required|min:5',
   	);
-
- 	public function posts()
-    {
-    	return $this->hasMany('Post','author_id');
-    }
-	public function comments()
-	{
-    	return $this->hasMany('Comment','user_id');
-   	}
-
-   	public function can_post()
-	{
-		$role = $this->role;
-		if($role == 'author' || $role == 'admin')
-		{
-		  return true;
-		}
-		return false;
-	}
-	public function is_admin()
-	{
-		$role = $this->role;
-		if($role == 'admin')
-		{
-		  return true;
-		}
-		return false;
-	}
-  	
+ 	  	
 }

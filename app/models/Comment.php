@@ -1,7 +1,17 @@
 <?php
+use app\Models\Traits\Relationship\CommentRelationship;
+/**
+*
+**/
+class Comment extends Eloquent
+{
+  use CommentRelationship;
 
-class Comment extends Eloquent {
-  //comments table in database
+  /**
+  *
+  *@var $guarded
+  *
+  **/
   protected $guarded = [];
 
   protected $fillable = array('body', 'user_id', 'post_id', 'created_at');

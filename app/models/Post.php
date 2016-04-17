@@ -1,6 +1,7 @@
 <?php
-
+use app\Models\Traits\Relationship\PostRelationship;
 class Post extends Eloquent {
+  use PostRelationship;
   //restricts columns from modifying
   // protected $guarded = [];
   protected $table = 'posts';
@@ -30,15 +31,5 @@ class Post extends Eloquent {
 
       return array_merge( $rules, $merge );
   }
-  // posts has many comments
-  // returns all comments on that post
-  public function comments()
-  {
-    return $this->hasMany('Comment','post_id');
-  }
-  // returns the instance of the user who is author of that post
-  public function author()
-  {
-    return $this->belongsTo('User','author_id');
-  }
+ 
 }
