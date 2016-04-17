@@ -19,28 +19,44 @@ class EloquentPostRepository implements RepositoryInterface
         }
 
     }
-
+    /**
+     * @param  int $id
+     * @return object
+     */
     public function find($id)
     {
         return Post::find($id);
     }
-
+    /**
+     * @param  array $input
+     * @return object
+     */
     public function create($input)
     {
         return Post::create($input);
     }
-
+    /**
+     * @param  int|array $ids
+     * @return object
+     */
     public function destroy($ids)
     {
         return Post::destroy($ids);
     }
-
+    /**
+     * @param  int $id
+     * @param  array $input
+     * @return object
+     */
     public function update($id, $input)
     {
         $post = Post::find($id);
         return $post->update($input);
     }
-
+    /**
+     * @param  string
+     * @return [type]
+     */
     public function search($param = null)
     {
 

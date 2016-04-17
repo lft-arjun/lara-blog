@@ -1,5 +1,7 @@
 <?php namespace Database\Storage\Interfaces;
- 
+ /**
+  * Repository Interface 
+  */
 interface RepositoryInterface {
 	public function all($param = null);
 	public function find($id);
