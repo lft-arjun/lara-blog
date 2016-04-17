@@ -3,8 +3,7 @@
 {{ Form::open(['route'=>['comment.store']]) }}
 {{ Form::hidden('post_id', $post_id) }}
 <div class="row">
-    <?php $bodyE = $errors->first('body'); ?>
-    <div class={{{ empty($bodyE) ? 'form-group' : 'has-error'  }}}>
+    <div class={{{ empty($errors->has('body')) ? 'form-group' : 'has-error'  }}}>
         {{ Form::label('body','Comment:') }}
         {{ Form::textarea('body',Input::old('body'),['rows'=>5 , 'class' => 'form-control', 'id' => 'comment-body']) }}
         <div>{{{($errors->has()) ? $errors->first('body') : '' }}}</div>
