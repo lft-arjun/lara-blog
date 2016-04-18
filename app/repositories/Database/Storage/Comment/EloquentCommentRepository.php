@@ -15,21 +15,36 @@ class EloquentCommentRepository implements RepositoryInterface
     {
         return Comment::findOrFail($id);
     }
-
+    /**
+     * @param array $input
+     * @return object
+     * */
     public function create($input)
     {
-        return Comment::create($input);
+        try {
+            return Comment::create($input);
+        } catch (Exception $e) {
+            throw new Exception('Something went wrong while creating comment');
+        }
     }
 
     public function destroy($ids)
     {
         return Comment::destroy($ids);
     }
-
+    /**
+     * @param int $id
+     * @param array $input
+     * @return object
+     * */
     public function update($id, $input)
     {
-    $comment = Comment::find($id);
-        return $comment->update($input);
+        try {
+            $comment = Comment::find($id);
+            return $comment->update($input); 
+        } catch (Exception $e) {
+            throw new Exception('Something went wrong while update comment');
+        }
     }
     public function search($param = null)
     {
