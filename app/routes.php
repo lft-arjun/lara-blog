@@ -43,7 +43,7 @@ Route::group(array('before' => 'auth'), function()
 Route::group(array('before' => 'auth.admin'), function()
 {
     // //Route for posts
-    Route::get('posts/list', ["as"   => "posts.list", 'uses' =>'PostController@list']);
+    Route::get('posts/list', ["as"   => "posts.list", 'uses' =>'PostController@bloglist']);
     Route::get('posts/create', ["as"   => "posts.create", 'uses' =>'PostController@create']);
     Route::post('posts/create', ["as"   => "posts.store", 'uses' =>'PostController@store']);
 

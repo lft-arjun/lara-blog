@@ -58,7 +58,7 @@ class PostController extends \BaseController
 				{
 				    $file = Input::file('image');
 				    $fileName = $fileName = $file->getFilename() . '' .$file->getClientOriginalExtension();
-				    $file->move(public_path().'uploads/', $fileName);
+				    $file->move(public_path().'/uploads/', $fileName);
 				    $input['image'] = $fileName;
 				}
 	        	$input['is_active'] = 1;
@@ -161,7 +161,7 @@ class PostController extends \BaseController
 	 *
 	 * @return Response
 	 */
-	public function list()
+	public function bloglist()
 	{
 		$posts = $this->post->all();
 		return View::make('posts.list' , compact('posts'));

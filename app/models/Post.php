@@ -11,12 +11,12 @@ class Post extends Eloquent {
      'create' => [
       'title' => 'unique:posts,title|required',
       'body' => 'required|min:5',
-      'image' => 'image|max:5'
+      'image' => 'image|max:5000kb'
       ],
       'update' => [
         'title' => 'unique:posts,title|required,:id',
         'body' => 'required|min:5',
-        'image' => 'image|max:5kb'
+        'image' => 'image|max:5000kb'
       ]
     );
   public static function rules( $action, $merge=[], $id=false)

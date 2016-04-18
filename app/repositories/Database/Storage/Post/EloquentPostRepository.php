@@ -11,11 +11,15 @@ class EloquentPostRepository implements RepositoryInterface
     **/
     public function all($param = null)
     {
-        if (empty($param)) {
-            return Post::where('is_active', '=', 1)->orderBy('created_at', 'desc')->paginate(static::PAGELIMIT);
-        } else {
+        try {
+            if (empty($param)) {
+                return Post::where('is_active', '=', 1)->orderBy('created_at', 'desc')->paginate(static::PAGELIMIT);
+            } else {
 
-          return Post::where('is_active', '=', 1)->where('title', 'like', '%'.$param.'%')->orderBy('created_at', 'desc')->paginate(static::PAGELIMIT);
+              return Post::where('is_active', '=', 1)->where('title', 'like', '%'.$param.'%')->orderBy('created_at', 'desc')->paginate(static::PAGELIMIT);
+            }
+        } catch (\Exception $e) {
+            throw new Exception('Something went wrong while listing blog', $e->getMessage());
         }
 
     }
@@ -25,7 +29,7 @@ class EloquentPostRepository implements RepositoryInterface
      */
     public function find($id)
     {
-        return Post::find($id);
+        return Post::findOrFail($id);
     }
     /**
      * @param  array $input
@@ -33,7 +37,11 @@ class EloquentPostRepository implements RepositoryInterface
      */
     public function create($input)
     {
-        return Post::create($input);
+        try {
+            return Post::create($input);
+        } catch (Exception $e) {
+            throw new Exception('Something went wrong while saving post', $e->getMessage());
+        }
     }
     /**
      * @param  int|array $ids

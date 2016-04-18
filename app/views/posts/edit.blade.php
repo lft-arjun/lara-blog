@@ -3,8 +3,8 @@
 
 @section('content')
 <h2 class="new-post">
-    Add New Post
-    <span class="right">{{ HTML::link('admin/dash-board','Cancel',['class' => 'button tiny radius']) }}</span>
+    Edit Post
+    <!-- <span class="right">{{ HTML::link('posts/list','Cancel',['class' => 'button tiny radius']) }}</span> -->
 </h2>
 <hr>
 {{ Form::model($post, array('method' => 'PATCH', 'route' => array('post.update', $post->id), 'files' => true)) }}
