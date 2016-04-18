@@ -56,7 +56,7 @@ Route::filter('auth.basic', function()
 Route::filter('auth.admin', function()
 {
 	if (Auth::check()) {
-		if (Auth::User()->role != 'admin' || Auth::User()->role != 'author') return Redirect::to('/')->with('message', 'Unauthorized');
+		if (Auth::User()->role != 'admin') return Redirect::to('/')->with('message', 'Unauthorized');
 	} else {
 		return Redirect::to('/');
 	} 
