@@ -36,7 +36,7 @@
         
         <div class="form-group">
             {{ Form::label('role', 'Role:', array('class' => '')) }}
-        	{{Form::select('role', array('admin' => 'Admin', 'author' => 'Author'), Input::old('role'), array('class' => 'form-control')) }}
+        	{{Form::select('role', array('admin' => 'Admin', 'author' => 'Author', 'subscriber' => 'Subscriber'), Input::old('role'), array('class' => 'form-control')) }}
                 
             <div>{{$errors->first('role')}}</div>
         </div>
