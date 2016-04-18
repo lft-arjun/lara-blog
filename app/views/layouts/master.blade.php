@@ -8,12 +8,19 @@
 			
 		</script>
 		<!-- CSS -->
-		{{HTML::style('css/bootstrap.css') }}
-		{{HTML::style('css/styles.css') }}
+		<link media="all" type="text/css" rel="stylesheet"  href="/css/bootstrap.css">
+		<link media="all" type="text/css" rel="stylesheet"  href="/css/styles.css">
+		<!--JS-->
+		<script type="text/javascript" src="/js/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.js"></script>
+		<script type="text/javascript" src="/js/comment.js"></script>
+		<!--below code has issue with https, so commented @todo fix issue later-->
+		<!--{{HTML::style('css/bootstrap.css') }}-->
+		<!--{{HTML::style('css/styles.css') }}-->
 		<!-- js -->
-		{{HTML::script('js/jquery-1.12.3.js')}}
-		{{HTML::script('js/bootstrap.js')}}
-		{{HTML::script('js/comment.js')}}
+		<!--{{HTML::script('js/jquery-1.12.3.js')}}-->
+		<!--{{HTML::script('js/bootstrap.js')}}-->
+		<!--{{HTML::script('js/comment.js')}}-->
 
 	</head>
     <body>
