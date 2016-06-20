@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/lft-arjun/lara-blog.png?label=ready&title=Ready)](https://waffle.io/lft-arjun/lara-blog)
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
